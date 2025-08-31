@@ -43,15 +43,19 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // ✅ allow public access to register & login
+                        // ✅ Public endpoints
                         .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
-                        // ✅ only admin can access /api/admin/**
+                        .requestMatchers("/api/otp/**").permitAll()   // <-- allow OTP (forgot/reset password)
+
+                        // ✅ Role-based restriction
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        // ✅ all other endpoints require authentication
+
+                        // ✅ Any other endpoint needs authentication
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider());
+
         // 🚨 jwt filter still disabled
         // .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 

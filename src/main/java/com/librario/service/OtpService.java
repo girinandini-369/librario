@@ -26,20 +26,24 @@ public class OtpService {
 
     @Transactional
     public void generateAndSendOtp(String email) {
-        // Generate 6-digit OTP, including leading zeros
-        String otp = String.format("%06d", ThreadLocalRandom.current().nextInt(1_000_000));
+        // Generate 6-digit OTP (always zero-padded)
+        String otp = String.format("%06d", ThreadLocalRandom.current().nextInt(0, 1_000_000));
 
         LocalDateTime now = LocalDateTime.now();
 
+        // Delete old OTP for this email
+        otpRepository.deleteByEmail(email);
+
+        // Save new OTP in DB
         OtpCode otpCode = new OtpCode();
         otpCode.setEmail(email);
         otpCode.setOtp(otp);
         otpCode.setCreatedAt(now);
         otpCode.setExpiresAt(now.plusMinutes(otpExpirationMinutes));
 
-        otpRepository.deleteByEmail(email); // Remove old OTPs
         otpRepository.save(otpCode);
 
+        // Send via email
         sendOtpEmail(email, otp);
     }
 
@@ -47,9 +51,17 @@ public class OtpService {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
             helper.setTo(toEmail);
             helper.setSubject("Your OTP for Librario Password Reset");
-            helper.setText("Your OTP is: " + otp + ". It will expire in " + otpExpirationMinutes + " minutes.");
+            helper.setText(
+                    "Hello,\n\n" +
+                            "Your OTP is: " + otp + "\n\n" +
+                            "This OTP will expire in " + otpExpirationMinutes + " minutes.\n\n" +
+                            "If you didn’t request this, please ignore.\n\n" +
+                            "Regards,\nLibrario Team"
+            );
+
             mailSender.send(message);
         } catch (MessagingException e) {
             throw new RuntimeException("Failed to send OTP email", e);
@@ -58,17 +70,16 @@ public class OtpService {
 
     @Transactional
     public boolean validateOtp(String email, String otp) {
-        OtpCode otpCode = otpRepository.findByEmailAndOtp(email, otp)
-                .orElse(null);
-        if (otpCode == null) return false;
-
-        LocalDateTime now = LocalDateTime.now();
-
-        if (otpCode.getExpiresAt().isBefore(now)) {
-            otpRepository.delete(otpCode);
-            return false;
-        }
-        otpRepository.delete(otpCode);
-        return true;
+        return otpRepository.findByEmailAndOtp(email, otp)
+                .map(otpCode -> {
+                    LocalDateTime now = LocalDateTime.now();
+                    if (otpCode.getExpiresAt().isBefore(now)) {
+                        otpRepository.delete(otpCode);
+                        return false;
+                    }
+                    otpRepository.delete(otpCode); // OTP is single-use
+                    return true;
+                })
+                .orElse(false);
     }
 }

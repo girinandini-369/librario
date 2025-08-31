@@ -17,7 +17,7 @@ public class OtpCode {
 
     private String otp;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
     private LocalDateTime expiresAt;
 }

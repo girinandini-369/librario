@@ -16,6 +16,7 @@ public class OtpController {
     private final OtpService otpService;
     private final UserService userService;
 
+    // Step 1: User requests OTP for password reset
     @PostMapping("/forgot-password")
     public ResponseEntity<String> forgotPassword(@RequestBody OtpRequest request) {
         if (!userService.existsByEmail(request.getEmail())) {
@@ -25,6 +26,7 @@ public class OtpController {
         return ResponseEntity.ok("OTP sent to your email");
     }
 
+    // Step 2: User submits OTP and new password
     @PostMapping("/reset-password")
     public ResponseEntity<String> resetPassword(@RequestBody ResetPasswordRequest request) {
         boolean valid = otpService.validateOtp(request.getEmail(), request.getOtp());
