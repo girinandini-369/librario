@@ -26,15 +26,13 @@ public class OtpService {
 
     @Transactional
     public void generateAndSendOtp(String email) {
-        // Generate 6-digit OTP (always zero-padded)
         String otp = String.format("%06d", ThreadLocalRandom.current().nextInt(0, 1_000_000));
-
         LocalDateTime now = LocalDateTime.now();
 
-        // Delete old OTP for this email
+        // Remove old OTP
         otpRepository.deleteByEmail(email);
 
-        // Save new OTP in DB
+        // Save new OTP
         OtpCode otpCode = new OtpCode();
         otpCode.setEmail(email);
         otpCode.setOtp(otp);
@@ -43,7 +41,6 @@ public class OtpService {
 
         otpRepository.save(otpCode);
 
-        // Send via email
         sendOtpEmail(email, otp);
     }
 
@@ -54,13 +51,7 @@ public class OtpService {
 
             helper.setTo(toEmail);
             helper.setSubject("Your OTP for Librario Password Reset");
-            helper.setText(
-                    "Hello,\n\n" +
-                            "Your OTP is: " + otp + "\n\n" +
-                            "This OTP will expire in " + otpExpirationMinutes + " minutes.\n\n" +
-                            "If you didn’t request this, please ignore.\n\n" +
-                            "Regards,\nLibrario Team"
-            );
+            helper.setText("Your OTP is: " + otp + "\nThis OTP will expire in " + otpExpirationMinutes + " minutes.");
 
             mailSender.send(message);
         } catch (MessagingException e) {
@@ -72,12 +63,11 @@ public class OtpService {
     public boolean validateOtp(String email, String otp) {
         return otpRepository.findByEmailAndOtp(email, otp)
                 .map(otpCode -> {
-                    LocalDateTime now = LocalDateTime.now();
-                    if (otpCode.getExpiresAt().isBefore(now)) {
+                    if (otpCode.getExpiresAt().isBefore(LocalDateTime.now())) {
                         otpRepository.delete(otpCode);
                         return false;
                     }
-                    otpRepository.delete(otpCode); // OTP is single-use
+                    otpRepository.delete(otpCode); // single use
                     return true;
                 })
                 .orElse(false);

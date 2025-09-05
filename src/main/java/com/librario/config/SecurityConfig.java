@@ -43,20 +43,13 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // ✅ Public endpoints
-                        .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
-                        .requestMatchers("/api/otp/**").permitAll()   // <-- allow OTP (forgot/reset password)
-
-                        // ✅ Role-based restriction
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-
-                        // ✅ Any other endpoint needs authentication
-                        .anyRequest().authenticated()
+                        // 🚨 For testing: allow ALL endpoints without authentication
+                        .anyRequest().permitAll()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider());
 
-        // 🚨 jwt filter still disabled
+        // 🚨 JWT filter is still disabled for now
         // .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

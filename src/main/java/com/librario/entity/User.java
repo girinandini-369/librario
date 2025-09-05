@@ -1,32 +1,29 @@
 package com.librario.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import java.time.LocalDateTime;
+import lombok.*;
 
 @Entity
 @Table(name = "users")
-@Data  // ✅ Lombok will generate getters/setters, toString, equals, hashCode
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
-
     @Column(nullable = false, unique = true)
-    private String email;   // ✅ used in CustomUserDetailsService
+    private String email;
 
     @Column(nullable = false)
-    private String password;  // ✅ used in CustomUserDetailsService
+    private String password;
 
-    @ManyToOne(fetch = FetchType.EAGER)   // ✅ always load role with user
-    @JoinColumn(name = "role_id", nullable = false)
-    private Role role;  // ✅ used in CustomUserDetailsService
-
-    private String status;  // ACTIVE, INACTIVE
-
-    private LocalDateTime createdAt = LocalDateTime.now();
-    private LocalDateTime updatedAt = LocalDateTime.now();
+    // ✅ Many users can have one role (e.g., USER, ADMIN)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+    private Role role;
 }

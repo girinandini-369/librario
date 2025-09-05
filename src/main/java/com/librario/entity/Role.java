@@ -1,11 +1,15 @@
 package com.librario.entity;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
 @Table(name = "roles")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Role {
 
     @Id
@@ -13,7 +17,5 @@ public class Role {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String roleName;  // ADMIN, LIBRARIAN, MEMBER
-
-
+    private String roleName;
 }
