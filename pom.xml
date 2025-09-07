@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<<<<<<< HEAD
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
+=======
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Group and artifact identifiers for the project -->
+>>>>>>> b878e07268c5607efc5e8614f31f94c1c274fef6
     <groupId>com.librario</groupId>
     <artifactId>librario</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+<<<<<<< HEAD
     <name>librario</name>
     <description>Library Management System</description>
 
@@ -25,6 +34,24 @@
         <java.version>17</java.version>
     </properties>
 
+=======
+    <name>librario</name>  <!-- Name of the project -->
+    <description>Library Management System</description>  <!-- Project description -->
+
+    <!-- Parent project configuration for Spring Boot -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.4</version>  <!-- Spring Boot version -->
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <java.version>17</java.version>  <!-- Java version -->
+    </properties>
+
+    <!-- Repositories configuration -->
+>>>>>>> b878e07268c5607efc5e8614f31f94c1c274fef6
     <repositories>
         <repository>
             <id>central</id>
@@ -32,20 +59,34 @@
         </repository>
     </repositories>
 
+<<<<<<< HEAD
     <dependencies>
         <!-- Spring Boot Starter Web -->
+=======
+    <!-- Project dependencies -->
+    <dependencies>
+        <!-- Spring Boot Starter Web for building web apps -->
+>>>>>>> b878e07268c5607efc5e8614f31f94c1c274fef6
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+<<<<<<< HEAD
         <!-- Spring Boot Starter Security -->
+=======
+        <!-- Spring Boot Starter Security for securing the application -->
+>>>>>>> b878e07268c5607efc5e8614f31f94c1c274fef6
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
+<<<<<<< HEAD
         <!-- Spring Boot Starter Data JPA -->
+=======
+        <!-- Spring Boot Starter Data JPA for database access -->
+>>>>>>> b878e07268c5607efc5e8614f31f94c1c274fef6
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -59,7 +100,11 @@
             <scope>runtime</scope>
         </dependency>
 
+<<<<<<< HEAD
         <!-- Lombok -->
+=======
+        <!-- Lombok for reducing boilerplate code -->
+>>>>>>> b878e07268c5607efc5e8614f31f94c1c274fef6
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -67,7 +112,11 @@
             <scope>provided</scope>
         </dependency>
 
+<<<<<<< HEAD
         <!-- JWT dependencies -->
+=======
+        <!-- JSON Web Token (JWT) dependencies -->
+>>>>>>> b878e07268c5607efc5e8614f31f94c1c274fef6
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -86,26 +135,39 @@
             <scope>runtime</scope>
         </dependency>
 
+<<<<<<< HEAD
         <!-- Mail functionality -->
+=======
+        <!-- Spring Boot Starter Mail for email functionality -->
+>>>>>>> b878e07268c5607efc5e8614f31f94c1c274fef6
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
+<<<<<<< HEAD
         <!-- ModelMapper -->
+=======
+        <!-- ModelMapper for object mapping -->
+>>>>>>> b878e07268c5607efc5e8614f31f94c1c274fef6
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>3.2.0</version>
         </dependency>
 
+<<<<<<< HEAD
         <!-- Testing -->
+=======
+        <!-- Spring Boot Starter Test for testing -->
+>>>>>>> b878e07268c5607efc5e8614f31f94c1c274fef6
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
+<<<<<<< HEAD
         <!-- Servlet API -->
         <dependency>
             <groupId>jakarta.servlet</groupId>
@@ -123,6 +185,19 @@
 
 
 
+=======
+        <!-- Updated version of jakarta.servlet-api -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>5.0.0</version> <!-- Corrected version -->
+            <scope>provided</scope>
+        </dependency>
+
+    </dependencies>
+
+    <!-- Build configuration for Spring Boot Maven Plugin -->
+>>>>>>> b878e07268c5607efc5e8614f31f94c1c274fef6
     <build>
         <plugins>
             <plugin>
@@ -131,5 +206,8 @@
             </plugin>
         </plugins>
     </build>
+<<<<<<< HEAD
 
+=======
+>>>>>>> b878e07268c5607efc5e8614f31f94c1c274fef6
 </project>

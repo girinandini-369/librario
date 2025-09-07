@@ -1,16 +1,25 @@
 package com.librario.entity;
 
 import jakarta.persistence.*;
+<<<<<<< HEAD
 import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "book") // matches your existing table
+=======
+import lombok.Data;
+
+@Entity
+@Table(name = "books")
+@Data
+>>>>>>> b878e07268c5607efc5e8614f31f94c1c274fef6
 public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+<<<<<<< HEAD
     @Column(nullable = false) @NotBlank
     private String title;
 
@@ -74,4 +83,17 @@ public class Book {
 
     public String getBookshelf() { return bookshelf; }
     public void setBookshelf(String bookshelf) { this.bookshelf = bookshelf; }
+=======
+    private String title;
+    private String author;
+    private String genre;
+    private String publisher;
+    private int year;
+    private String isbn;
+
+    private int totalCopies;
+    private int availableCopies;
+
+    private String status; // AVAILABLE, UNAVAILABLE
+>>>>>>> b878e07268c5607efc5e8614f31f94c1c274fef6
 }

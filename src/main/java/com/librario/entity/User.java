@@ -20,6 +20,7 @@ public class User {
     private String email;
 
     @Column(nullable = false)
+<<<<<<< HEAD
     private String name;
 
     @Column(nullable = false)
@@ -28,5 +29,12 @@ public class User {
     // ✅ Many-to-One relation with Role
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
+=======
+    private String password;
+
+    // ✅ Many users can have one role (e.g., USER, ADMIN)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "role_id")
+>>>>>>> b878e07268c5607efc5e8614f31f94c1c274fef6
     private Role role;
 }

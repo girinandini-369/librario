@@ -2,16 +2,25 @@ package com.librario.service;
 
 import com.librario.entity.Book;
 import com.librario.repository.BookRepository;
+<<<<<<< HEAD
 import com.librario.service.spec.BookSpecification;
+=======
+import lombok.RequiredArgsConstructor;
+>>>>>>> b878e07268c5607efc5e8614f31f94c1c274fef6
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+<<<<<<< HEAD
+=======
+@RequiredArgsConstructor
+>>>>>>> b878e07268c5607efc5e8614f31f94c1c274fef6
 public class BookService {
 
     private final BookRepository bookRepository;
 
+<<<<<<< HEAD
     public BookService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
@@ -51,10 +60,19 @@ public class BookService {
     }
 
     // ✅ Get all books
+=======
+    // Save a new book
+    public Book saveBook(Book book) {
+        return bookRepository.save(book);
+    }
+
+    // Get all books
+>>>>>>> b878e07268c5607efc5e8614f31f94c1c274fef6
     public List<Book> getAllBooks() {
         return bookRepository.findAll();
     }
 
+<<<<<<< HEAD
     // ✅ Get book by ID
     public Book getBookById(Long id) {
         return bookRepository.findById(id)
@@ -85,5 +103,32 @@ public class BookService {
         return bookRepository.findAll(
                 BookSpecification.advancedSearch(genre, author, publisher, title)
         );
+=======
+    // Get book by ID
+    public Book getBookById(Long id) {
+        return bookRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Book not found with id: " + id));
+    }
+
+    // Update book by ID
+    public Book updateBook(Long id, Book bookDetails) {
+        Book existingBook = getBookById(id);
+        existingBook.setTitle(bookDetails.getTitle());
+        existingBook.setAuthor(bookDetails.getAuthor());
+        existingBook.setGenre(bookDetails.getGenre());
+        existingBook.setPublisher(bookDetails.getPublisher());
+        existingBook.setYear(bookDetails.getYear());
+        existingBook.setIsbn(bookDetails.getIsbn());
+        existingBook.setTotalCopies(bookDetails.getTotalCopies());
+        existingBook.setAvailableCopies(bookDetails.getAvailableCopies());
+        existingBook.setStatus(bookDetails.getStatus());
+        return bookRepository.save(existingBook);
+    }
+
+    // Delete book by ID
+    public void deleteBook(Long id) {
+        Book existingBook = getBookById(id);
+        bookRepository.delete(existingBook);
+>>>>>>> b878e07268c5607efc5e8614f31f94c1c274fef6
     }
 }
